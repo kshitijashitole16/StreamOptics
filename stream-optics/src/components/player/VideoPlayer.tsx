@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef } from "react"
+import { BufferingOverlay } from "@/src/components/player/BufferingOverlay"
 import { Controls } from "@/src/components/player/Controls"
 import { StatsPanel } from "@/src/components/player/StatsPanel"
 import { useMediaEngine } from "@/src/hooks/useMediaEngine"
@@ -35,6 +36,7 @@ export function VideoPlayer({ streamUrl }: VideoPlayerProps) {
           </div>
         ) : null}
 
+        <BufferingOverlay hasStream={Boolean(resolvedUrl)} />
         <StatsPanel />
         <Controls videoRef={videoRef} />
       </div>

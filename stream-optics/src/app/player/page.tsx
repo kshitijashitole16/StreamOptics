@@ -7,7 +7,7 @@ const HLS_TEST_URL =
   "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
 
 const DASH_TEST_URL =
-  "https://dash.akamaized.net/akamai/test/isoff-hd/Teardown_Promo_25fps_720p_2000k.mpd"
+  "https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd"
 
 export default function PlayerPage() {
   const [streamUrl, setStreamUrl] = useState(HLS_TEST_URL)
@@ -27,7 +27,7 @@ export default function PlayerPage() {
           onClick={() => setStreamUrl(DASH_TEST_URL)}
           className="rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
         >
-          Load DASH test (Teardown Promo)
+          Load DASH test (Angel One)
         </button>
       </div>
 

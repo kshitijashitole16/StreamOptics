@@ -23,6 +23,30 @@ function buildHlsLevelName(level: { height?: number; name?: string }, index: num
   return `Level ${index + 1}`
 }
 
+function formatEngineError(error: unknown): string {
+  if (error instanceof Error && error.message) return error.message
+  if (typeof error === "object" && error !== null) {
+    const shakaError = error as {
+      message?: string
+      code?: number
+      category?: string
+      severity?: number
+    }
+    const parts = [
+      shakaError.message,
+      shakaError.code !== undefined ? `code=${shakaError.code}` : null,
+      shakaError.category ? `category=${shakaError.category}` : null,
+    ].filter(Boolean)
+    if (parts.length > 0) return parts.join(" · ")
+    try {
+      return JSON.stringify(error)
+    } catch {
+      return "Unknown playback engine error"
+    }
+  }
+  return String(error)
+}
+
 function buildShakaVariantName(track: {
   height?: number | null
   width?: number | null
@@ -348,7 +372,11 @@ export function useMediaEngine({ videoRef, streamUrl }: UseMediaEngineOptions) {
           applySelectionToActiveEngine()
           syncShakaBitrate(player)
         } catch (error) {
-          console.error("[StreamOptics] Failed to initialize DASH engine:", error)
+          console.error(
+            "[StreamOptics] Failed to initialize DASH engine:",
+            formatEngineError(error),
+            error,
+          )
           useMediaStore.getState().setAvailableQualities([])
         }
       }
