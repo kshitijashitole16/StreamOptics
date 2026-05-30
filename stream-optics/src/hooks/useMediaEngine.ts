@@ -244,7 +244,11 @@ export function useMediaEngine({ videoRef, streamUrl }: UseMediaEngineOptions) {
       shakaPlayerRef.current = null
       shakaVariantsRef.current = []
       if (!player) return
-      await player.destroy()
+      try {
+        await player.destroy()
+      } catch {
+        // Ignore teardown races during rapid route transitions.
+      }
     }
 
     void (async () => {
@@ -389,11 +393,12 @@ export function useMediaEngine({ videoRef, streamUrl }: UseMediaEngineOptions) {
         shakaPlayer.removeEventListener("adaptation", shakaAdaptationHandler)
       }
       destroyHls()
+      if (videoRef.current === video) {
+        video.removeAttribute("src")
+        video.load()
+      }
       void (async () => {
         await destroyShaka()
-        if (videoRef.current === video) {
-          resetVideoElement()
-        }
       })()
     }
   }, [streamUrl, videoRef])
