@@ -208,8 +208,8 @@ DATABASE_URL="postgresql://postgres:postgres@localhost:5432/streamoptics?schema=
 
 ```bash
 npm --prefix backend exec -- prisma db push \
-  --config "/Users/vikasbairwa/Documents/StreamOptics/backend/prisma.config.ts" \
-  --schema "/Users/vikasbairwa/Documents/StreamOptics/backend/prisma/schema.prisma" \
+  --config "/StreamOptics/backend/prisma.config.ts" \
+  --schema "/StreamOptics/backend/prisma/schema.prisma" \
   --url "postgresql://postgres:postgres@localhost:5432/streamoptics?schema=public"
 ```
 
